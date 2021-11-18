@@ -1,5 +1,5 @@
 name: trigger jenkins job
-on: [pull_resquest]
+on: [pull_request]
 jobs:
   build:
    name: build
