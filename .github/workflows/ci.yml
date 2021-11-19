@@ -19,3 +19,6 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean install --file pom.xml
+    - name: trigger Jenkins Job
+      run : | 
+        curl -X POST -k --user "jenkins:1164c15cbf218ab3cede907e34f15f4735" "http://54.193.46.61:8080/job/demo-git/build?token=forRemoteRun"
