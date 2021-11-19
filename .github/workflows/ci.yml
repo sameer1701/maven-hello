@@ -1,0 +1,22 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Java CI with Maven
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Jenkins_call
+      uses: sameer1701/maven-hello@master
+      with:
+       url: "http://54.193.46.61:8080/"
+       user: "jenkins"
+       token: ${{ secrets.TOKEN }}
+       job: "demo-git"
