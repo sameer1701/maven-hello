@@ -12,12 +12,12 @@ jobs:
     steps:
     - name: Extract branch name
       shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
       id: extract_branch
     - name: trigger Jenkins Job
       run : | 
         curl -X POST -k --user "jenkins:$USER_TOKEN" "$Jenkins_Host/job/gi-light/buildWithParameters?token=forRemoteRun&Branch=${branch_name}&cause=github_actions"
       env :
         USER_TOKEN : ${{ secrets.JENKINSUSER }}
-        Jenkins_Host : $ {{ secrets.JENKINS_HOST }}
+        Jenkins_Host : ${{ secrets.JENKINS_HOST }}
         branch_name : ${{ steps.extract_branch.outputs.branch }}
