@@ -39,6 +39,7 @@ jobs:
       run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=poc-maven
     - name: trigger Jenkins Job
       run : | 
-        curl -X POST -k --user "jenkins:$USER_TOKEN" "http://54.193.46.61:8080/job/demo-git/build?token=forRemoteRun"
+        curl -X POST -k --user "jenkins:$USER_TOKEN" "$Jenkins_Host/job/gi-light/build?token=forRemoteRun"
       env :
         USER_TOKEN : ${{ secrets.JENKINSUSER }}
+        Jenkins_Host : $ {{ secrets.JENKINS_HOST }}
