@@ -12,9 +12,10 @@ jobs:
     steps:
     - name: Extract branch name
       shell: bash
-      run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_HEAD_REF})"
+      run: echo running on ${GITHUB_REF##*/}
     - name: trigger Jenkins Job
       run : | 
-        curl -X POST -k --user "jenkins:$USER_TOKEN" "http://192.168.56.1:8080/job/gi-light/buildWithParameters?token=forRemoteRun&Branch=${BRANCH_NAME}&cause=github_actions"
+        curl -X POST -k --user "jenkins:$USER_TOKEN" "http://192.168.56.1:8080/job/gi-light/buildWithParameters?token=forRemoteRun&Branch=${branch_name}&cause=github_actions"
       env :
         USER_TOKEN : ${{ secrets.JENKINSUSER }}
+        branch_name: ${GITHUB_REF##*/}
