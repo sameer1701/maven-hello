@@ -15,11 +15,16 @@ jobs:
          curl -X POST -k --user "jenkins:$USER_TOKEN" "http://50.18.23.229:8080/job/demo-test/buildWithParameters?token=forRemoteRun&Branch=${GITHUB_HEAD_REF}&cause=github_actions"
       env :
         USER_TOKEN : ${{ secrets.JENKINSINTERNAL }}
-    - name: trigger single Job
-      uses: appleboy/jenkins-action@master
+    - name: Trigger your-awesome-job-name job
+      uses: toptal/jenkins-job-trigger-action@master
       with:
-        url: "http://50.18.23.229:8080"
-        user: "jenkins"
-        token: ${{ secrets.JENKINSINTERNAL }}
-        job: "demo-test"
+          jenkins_url: "http://50.18.23.229:8080"
+          jenkins_user: "jenkins"
+          jenkins_token: ${{ secrets.JENKINSINTERNAL }}
+          job_name: "demo-test"
+          job_params: |
+            {
+              "Branch": "${GITHUB_HEAD_REF}"
+            }
+          job_timeout: "3600" # Default 30 sec. (optional)
 
