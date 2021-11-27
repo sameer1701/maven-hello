@@ -16,7 +16,7 @@ jobs:
       env :
         USER_TOKEN : ${{ secrets.JENKINSINTERNAL }}
     - name: Get job status
-      run: script/job_wait.sh ${JENKINS_URL} ${JOB_NAME} ${USER_TOKEN}
+      run: job_wait.sh ${JENKINS_URL} ${JOB_NAME} ${USER_TOKEN}
       env: 
         JOB_NAME : "demo-test"
         JENKINS_URL : "http://50.18.23.229:8080"
