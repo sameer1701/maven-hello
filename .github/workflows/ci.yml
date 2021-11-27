@@ -10,20 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Trigger jenkins job
-      uses: jabbukka/jenkins-trigger@main
-      with:
-        url: ${{ secrets.JENKINS_URL_TEST }}
-        job_name: "build_web_application"
-        user_name: ${{ secrets.JENKINSUSER }}
-        api_token: ${{ secrets.JENKINSINTERNAL }}
-        parameter: '{"Branch":"${GITHUB_HEAD_REF}"}'
-        wait: "true"
-        timeout: "1000"
-    - name: Get job status
-      run: echo "Job status is ${{ steps.job-build.outputs.job_status }}"
     - name: trigger Jenkins Job
       run : | 
          curl -X POST -k --user "jenkins:$USER_TOKEN" "http://50.18.23.229:8080/job/demo-test/buildWithParameters?token=forRemoteRun&Branch=${GITHUB_HEAD_REF}&cause=github_actions"
       env :
         USER_TOKEN : ${{ secrets.JENKINSINTERNAL }}
+    - name: Get job status
+      run: script/job_wait.sh ${JENKINS_URL} ${JOB_NAME} ${USER_TOKEN}
+      env: 
+        JOB_NAME : "demo-test"
+        JENKINS_URL : "http://50.18.23.229:8080"
+        USER_TOKEN : ${{ secrets.JENKINSINTERNAL }}
+
