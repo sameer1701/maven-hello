@@ -19,7 +19,9 @@ jobs:
           job_name: "demo-test"
           job_params: |
             {
-              "Branch": "${GITHUB_HEAD_REF}"
+              "Branch": "${BR_NAME}"
             }
           job_timeout: "3600" # Default 30 sec. (optional)
+      env :
+         BR_NAME : ${GITHUB_HEAD_REF}
 
