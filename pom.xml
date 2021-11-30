@@ -22,8 +22,8 @@
            </dependency>
            <dependency>
                <groupId>org.owasp</groupId>
-               <artifactId>dependency-check-core</artifactId>
-               <version>6.5.0</version>
+               <artifactId>dependency-check-maven</artifactId>
+               <version>${dependency-check-maven.version}</version>
            </dependency>
        </dependencies>
        <!-- end::joda[] -->
@@ -48,6 +48,18 @@
                                 </transformer>
                             </transformers>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+            <groupId>org.owasp</groupId>
+              <artifactId>dependency-check-maven</artifactId>
+                <version>6.1.1</version>
+                  <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
