@@ -10,19 +10,20 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-     - name: "Trigger jenkins job"
-       uses: Gympass/jenkins-job-action@0.0.5
-       with:
-        jenkins_url: "http://50.18.23.229:8080/"
-        jenkins_user: "jenkins"
-        jenkins_token: "${{ secrets.JENKINSINTERNAL }}" # Consider declaring this as a Github secret, for security purposes.
-        job_name: "{demo-test}"
-        jenkins_params: '{"branch": "${GITHUB_HEAD_REF}"}' # Optional.
-        job_timeout: "150" # Optional.
-     - name: Get job status
-       run: echo "Job status is ${{ steps.job-build.outputs.job_status }}"
-     - name: trigger Jenkins Job
-       run : | 
+    - name: Trigger jenkins job
+      uses: jabbukka/jenkins-trigger@main
+      with:
+        url: ${{ secrets.JENKINS_URL_TEST }}
+        job_name: "build_web_application"
+        user_name: ${{ secrets.JENKINSUSER }}
+        api_token: ${{ secrets.JENKINSINTERNAL }}
+        parameter: '{"Branch":"${GITHUB_HEAD_REF}"}'
+        wait: "true"
+        timeout: "1000"
+    - name: Get job status
+      run: echo "Job status is ${{ steps.job-build.outputs.job_status }}"
+    - name: trigger Jenkins Job
+      run : | 
          curl -X POST -k --user "jenkins:$USER_TOKEN" "http://50.18.23.229:8080/job/demo-test/buildWithParameters?token=forRemoteRun&Branch=${GITHUB_HEAD_REF}&cause=github_actions"
-       env :
+      env :
         USER_TOKEN : ${{ secrets.JENKINSINTERNAL }}
