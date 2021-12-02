@@ -16,6 +16,7 @@ jobs:
       env :
         USER_TOKEN : ${{ secrets.JENKINSINTERNAL }}
     - name: Get job status
+    - uses: actions/checkout@v2
       run: |
          chmod +x .github/job_wait.sh 
          .github/job_wait.sh http://50.18.23.229:8080 demo-test $USER_TOKEN
