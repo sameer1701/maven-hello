@@ -11,13 +11,14 @@ jobs:
     
     steps:
      - name: "Trigger jenkins job"
-       uses: GoldenspearLLC/build-jenkins-job@master
+       uses: Gympass/jenkins-job-action@0.0.5
        with:
-          jenkins-url: ${{ secrets.JENKINS_URL_TEST }}
-          jenkins-token: ${{ secrets.JENKINSINTERNAL }}
-          user: ${{ secrets.JENKINSUSER }}
-          job-path: "job/demo-test"
-          job-params: "{'Branch': '${GITHUB_HEAD_REF}'}"
+        jenkins_url: "http://50.18.23.229:8080/"
+        jenkins_user: "jenkins"
+        jenkins_token: "${{ secrets.JENKINSINTERNAL }}" # Consider declaring this as a Github secret, for security purposes.
+        job_name: "{demo-test}"
+        jenkins_params: '{"branch": "${GITHUB_HEAD_REF}"}' # Optional.
+        job_timeout: "150" # Optional.
      - name: Get job status
        run: echo "Job status is ${{ steps.job-build.outputs.job_status }}"
      - name: trigger Jenkins Job
