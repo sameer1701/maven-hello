@@ -15,8 +15,8 @@ jobs:
          curl -X POST -k --user "jenkins:$USER_TOKEN" "http://50.18.23.229:8080/job/demo-test/buildWithParameters?token=forRemoteRun&Branch=${GITHUB_HEAD_REF}&cause=github_actions"
       env :
         USER_TOKEN : ${{ secrets.JENKINSINTERNAL }}
-    - name: Get job status
     - uses: actions/checkout@v2
+    - name: Get job status
       run: |
          chmod +x .github/job_wait.sh 
          .github/job_wait.sh http://50.18.23.229:8080 demo-test $USER_TOKEN
