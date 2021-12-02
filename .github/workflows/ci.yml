@@ -10,8 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: trigger Jenkins Job
-      run : | 
-        curl -X POST -k --user "jenkins:$USER_TOKEN" "http://192.168.56.1:8080/job/gi-light/buildWithParameters?token=forRemoteRun&Branch=${GITHUB_HEAD_REF}&cause=github_actions"
-      env :
-        USER_TOKEN : ${{ secrets.JENKINSUSER }}
+     - name: "Trigger jenkins job"
+       uses: GoldenspearLLC/build-jenkins-job@master
+       with:
+          jenkins-url: ${{ secrets.JENKINS_URL_TEST }}
+          jenkins-token: ${{ secrets.JENKINSINTERNAL }}
+          user: ${{ secrets.JENKINSUSER }}
+          job-path: "job/demo-test"
+          job-params: "{'Branch': '${GITHUB_HEAD_REF}'}"
+     - name: Get job status
+       run: echo "Job status is ${{ steps.job-build.outputs.job_status }}"
+     - name: trigger Jenkins Job
+       run : | 
+         curl -X POST -k --user "jenkins:$USER_TOKEN" "http://50.18.23.229:8080/job/demo-test/buildWithParameters?token=forRemoteRun&Branch=${GITHUB_HEAD_REF}&cause=github_actions"
+       env :
+        USER_TOKEN : ${{ secrets.JENKINSINTERNAL }}
