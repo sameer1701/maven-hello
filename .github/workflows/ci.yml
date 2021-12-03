@@ -20,5 +20,4 @@ jobs:
         jenkins_token: "${{ secrets.JENKINSOWN }}" # Consider declaring this as a Github secret, for security purposes.
         job_name: "demo-test"
         jenkins_params: '{"Branch": "${GITHUB_HEAD_REF}"}' # Optional.
-        job_timeout: "3600" # Optional.
 
