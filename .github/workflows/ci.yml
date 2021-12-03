@@ -10,16 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Trigger your-awesome-job-name job
+    - name: Branch Name
+      run: echo ${GITHUB_HEAD_REF}
+    - name: Trigger jenkins job
       uses: toptal/jenkins-job-trigger-action@master
       with:
-          jenkins_url: "http://54.219.122.189:8080/"
+          jenkins_url: "http://54.219.122.189:8080"
           jenkins_user: "jenkins"
           jenkins_token: ${{ secrets.JENKINSOWN }}
           job_name: "demo-test"
           job_params: |
-            {
-              "Branch": "${GITHUB_HEAD_REF}"
-            }
+           { 
+           "Branch" : "master" 
+           }          
           job_timeout: "3600" # Default 30 sec. (optional)
-
