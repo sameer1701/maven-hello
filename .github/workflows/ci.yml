@@ -20,8 +20,8 @@ jobs:
           jenkins_token: ${{ secrets.JENKINSOWN }}
           job_name: "demo-test"
           job_params: |
-            {
+            '{
               "Branch": ${{ env.GITHUB_HEAD_REF }}
-            }
+            }'
           job_timeout: "3600" # Default 30 sec. (optional)
 
