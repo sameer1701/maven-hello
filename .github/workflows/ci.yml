@@ -12,6 +12,12 @@ jobs:
     steps:
     - name: Branch Name
       run: echo ${GITHUB_HEAD_REF}
+    - name: job with url
+      uses: leanix/jenkins-action@master
+      with:
+         jobBuildUrl: curl -X POST -k --user "jenkins:$USER_TOKEN" "http://54.219.122.189:8080/job/demo-test/buildWithParameters?token=forRemoteRun&Branch=${GITHUB_HEAD_REF}&cause=github_actions"
+      env :
+        USER_TOKEN : ${{ secrets.JENKINSOWN }}   
     - name: Trigger jenkins job
       uses: toptal/jenkins-job-trigger-action@master
       with:
@@ -19,6 +25,9 @@ jobs:
           jenkins_user: "jenkins"
           jenkins_token: ${{ secrets.JENKINSOWN }}
           job_name: "demo-test"
-          job_params: "{ "Branch": ${{ env.GITHUB_HEAD_REF }}}"
+          job_params: |
+            {
+              "Branch": ${GITHUB_HEAD_REF}
+            }
           job_timeout: "3600" # Default 30 sec. (optional)
 
