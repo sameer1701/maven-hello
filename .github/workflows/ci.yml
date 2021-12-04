@@ -12,10 +12,18 @@ jobs:
     steps:
     - name: Branch Name
       run: echo ${GITHUB_REF}
+    - name: Json more
+      run: |
+        echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV
+        echo "{ \"Branch\":\"main\" }" >> $GITHUB_ENV
+        echo 'EOF' >> $GITHUB_ENV
+    - name: Test
+      run: |
+        echo "${{ env.JSON_RESPONSE }}"
     - name: Trigger jenkins job
       uses: toptal/jenkins-job-trigger-action@master
       with:
-          jenkins_url: "http://13.57.253.127:8080/"
+          jenkins_url: "http://54.176.222.225:8080"
           jenkins_user: "jenkins"
           jenkins_token: ${{ secrets.JENKINSOWN }}
           job_name: "demo-test"
