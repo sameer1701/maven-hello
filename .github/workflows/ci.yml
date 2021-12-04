@@ -27,7 +27,7 @@ jobs:
           jenkins_user: "jenkins"
           jenkins_token: ${{ secrets.JENKINSOWN }}
           job_name: "demo-test"
-          job_params: ${{ env.jsonstr }}
+          job_params: ${{ env.JSON_RESPONSE }}
           job_timeout: "3600" # Default 30 sec. (optional)
       env: 
          jsonstr: '{ "Branch" : "${GITHUB_REF##*/}" }'
