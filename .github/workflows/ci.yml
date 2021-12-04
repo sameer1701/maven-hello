@@ -22,5 +22,5 @@ jobs:
           job_params: ${{ env.jsonstr }}
           job_timeout: "3600" # Default 30 sec. (optional)
       env: 
-         jsonstr: '{ "Branch" : "master" }'
+         jsonstr: '{ "Branch" : ${{ env.GIT_AUTHOR_NAME }} }'
           
