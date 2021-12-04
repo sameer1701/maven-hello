@@ -11,7 +11,7 @@ jobs:
     
     steps:
     - name: Branch Name
-      run: echo ${GITHUB_HEAD_REF}
+      run: echo ${GITHUB_REF}
     - name: Trigger jenkins job
       uses: toptal/jenkins-job-trigger-action@master
       with:
