@@ -1,7 +1,7 @@
 name: Java CI with Maven
 
 on:
-  push:
+  pull_request:
     branches: [ master ]
 
 jobs:
@@ -10,16 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Branch Name
-      run: echo ${GITHUB_REF##*/}
-    - name: Json more
+    - name: Get Branch Name
       run: |
         echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV
-        echo "{ \"Branch\":\"${GITHUB_REF##*/}\" }" >> $GITHUB_ENV
+        echo "{ \"Branch\":\"${GITHUB_HEAD_REF}\" }" >> $GITHUB_ENV
         echo 'EOF' >> $GITHUB_ENV
-    - name: Test
-      run: |
-        echo "${{ env.JSON_RESPONSE }}"
     - name: Trigger jenkins job
       uses: toptal/jenkins-job-trigger-action@master
       with:
@@ -29,6 +24,3 @@ jobs:
           job_name: "demo-test"
           job_params: ${{ env.JSON_RESPONSE }}
           job_timeout: "3600" # Default 30 sec. (optional)
-      env: 
-         jsonstr: '{ "Branch" : "${GITHUB_REF##*/}" }'
-          
